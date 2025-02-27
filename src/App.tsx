@@ -6,9 +6,14 @@ export default function App() {
 
   const [weather, setWeather] = useState({})
 
-  weatherApi('perm', setWeather)
+  useEffect(() => {
+    weatherApi('kazan', setWeather)
+  }, [])
+
+  
 
   return (
+    
     <div className='h-dvh p-3 bg-gradient-to-b from-blue-300 to-blue-500' >
       <header className='flex justify-between items-center' >
         <button className='' >
@@ -24,7 +29,9 @@ export default function App() {
         </button>
       </header>
 
-      <main></main>
+      <main>
+        <span>{weather.main.temp}</span>
+      </main>
     </div>
   )
 }
