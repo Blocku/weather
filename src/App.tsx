@@ -1,36 +1,39 @@
+import { Plus, EllipsisVertical } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import weatherApi from './api/weather'
 import './App.css'
+import Menu from './components/menu'
 
 export default function App() {
 
-  const [weather, setWeather] = useState({})
+  const [weather, setWeather]:[any, Function] = useState({})
+  const [menu, setMenu] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    weatherApi('kazan', setWeather)
+    weatherApi('london', setWeather, setLoading)
   }, [])
 
   
 
   return (
-    
+    loading ? 
+    <div className='text-black text-xl' >Загрузка...</div>
+    : 
     <div className='h-dvh p-3 bg-gradient-to-b from-blue-300 to-blue-500' >
       <header className='flex justify-between items-center' >
-        <button className='' >
-          <svg fill="none" viewBox="0 0 24 24" className="h-6 w-6 stroke-2 stroke-white">
-            <path d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
+        <button onClick={() => setMenu(true)} className='' >
+          <Plus color='white' size={25} />
         </button>
         <span className='flex flex-grow justify-center text-xl font-medium ' >{weather.name}</span>
         <button>
-          <svg viewBox="0 0 24 24" className="h-6 w-6 stroke-2 stroke-white">
-            <path d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-          </svg>
+          <EllipsisVertical color='white' size={25} />
         </button>
       </header>
 
       <main>
         <span>{weather.main.temp}</span>
+        {menu && <Menu setMenu={setMenu} />}
       </main>
     </div>
   )
