@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import weatherApi from './api/weather'
 import './App.css'
 import Menu from './components/menu'
+import WeatherInfo from './components/weatherInfo'
 
 export default function App() {
 
@@ -11,7 +12,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    weatherApi('london', setWeather, setLoading)
+    weatherApi('perm', setWeather, setLoading)
   }, [])
 
   
@@ -20,7 +21,7 @@ export default function App() {
     loading ? 
     <div className='text-black text-xl' >Загрузка...</div>
     : 
-    <div className='h-dvh p-3 bg-gradient-to-b from-blue-300 to-blue-500' >
+    <div className='h-dvh w-full flex flex-col items- border-3 border-pink-400 p-3 bg-gradient-to-b from-blue-300 to-blue-500' >
       <header className='flex justify-between items-center' >
         <button onClick={() => setMenu(true)} className='' >
           <Plus color='white' size={25} />
@@ -31,10 +32,9 @@ export default function App() {
         </button>
       </header>
 
-      <main>
-        <span>{weather.main.temp}</span>
-        {menu && <Menu setMenu={setMenu} />}
-      </main>
+      <WeatherInfo weather={weather} />
+
+      {menu && <Menu setMenu={setMenu} />}
     </div>
   )
 }
